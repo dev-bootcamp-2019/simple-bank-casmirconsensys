@@ -74,7 +74,6 @@ contract SimpleBank {
     // Use the appropriate global variables to get the transaction sender and value
     // Emit the appropriate event
     function deposit() public payable returns (uint) {
-
         balances[msg.sender] += msg.value;
         emit LogDepositMade(msg.sender, msg.value);
         return balances[msg.sender];
@@ -87,17 +86,18 @@ contract SimpleBank {
     /// @param withdrawAmount amount you want to withdraw
     /// @return The balance remaining for the user
     // Emit the appropriate event
-    function withdraw(uint withdrawAmount) public payable returns (uint) {
-        withdrawAmount <= balances[msg.sender];
-        emit LogWithdrawal(msg.sender, msg.value, balances[msg.sender]);
-        require(withdrawAmount <= balances[msg.sender], "Withdrawal Amount should be less than balance");
-        return balances[msg.sender];
+    function withdraw(uint withdrawAmount) public payable returns (uint newBalance) {
+        balances[msg.sender] -= (2);
+        emit LogWithdrawal(msg.sender, withdrawAmount, newBalance);
+
+        return newBalance;
 
         /* If the sender's balance is at least the amount they want to withdraw,
            Subtract the amount from the sender's balance, and try to send that amount of ether
            to the user attempting to withdraw.
            return the user's balance.*/
     }
+
     // Fallback function - Called if other functions don't match call or
     // sent ether without data
     // Typically, called when invalid data is sent
